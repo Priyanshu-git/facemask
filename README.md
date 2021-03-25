@@ -17,4 +17,5 @@ The model was converted from Keras to TensorFlow Lite using the **TocoConverter*
 
 
 ## Based on TensorFlow Lite Object Recognition Example
-This code modified from the TensorFlow's object detection canonical example, to be used with the face mask model described above. In that repository we can find the source code for Android, iOS and Raspberry Pi. Here we will focus on making it work on Android, but doing it on the other platforms would simply consist of doing the analogous procedure.
+This code modified from the TensorFlow's object detection canonical example, to be used with the face mask model described above. In that repository we can find the source code for Android, iOS and Raspberry Pi.
+This model is built using TocoConverter python class to migrate from the Keras ‘.h5’ format to the TensorFlow Lite ‘.tflite’ format. The model was created by using transfer learning over the MobileNetV2 architecture, producing a ‘.h5’ file of about 11.5 MB. After TensorFlow Lite conversion, the resulting file is very light-weight only 9.5 MB, really good for a mobile application.
