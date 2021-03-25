@@ -1,7 +1,7 @@
 
 # Real time face mask detection in Android 
 
-![demo 1](demo/demo1.gif) ![demo 2](demo/demo2.gif) 
+![demo 1](demo/demo1.mp4) ![demo 2](demo/demo2.mp4) 
 
 
 ### Overview
@@ -24,21 +24,3 @@ The model was converted from Keras to TensorFlow Lite using the **TocoConverter*
 
 ## Based on TensorFlow Lite Object Recognition Example
 This code modified from the TensorFlow's object detection canonical example, to be used with the face mask model described above. In that repository we can find the source code for Android, iOS and Raspberry Pi. Here we will focus on making it work on Android, but doing it on the other platforms would simply consist of doing the analogous procedure.
-
-## Adding the Face Recognition Step
-The original code works with a single model (trained on the COCO dataset) and computes the results in one single step. For this app, we need to implement the two steps detection. Most of the work will consist in splitting the detection, first the face detection and second the mask detection. For the face detection step we are going to use the Google ML kit.
-he original app defines two bitmaps (the rgbFrameBitmap where the preview frame is copied, and the croppedBitmap which is originally used to feed the inference model). We are going to define two additional bitmaps for processing, the portraitBmp and the faceBmp. The first is simply to rotate the input frame in portrait mode for devices that have the sensor in landscape orientation. And the faceBmp bitmap is used to draw every detected face, cropping its detected location, and re-scaling to 224 x 224 px to be used as input of the MobileNetV2 model. The frameToCropTransform converts coordinates from the original bitmap to the cropped bitmap space, and cropToFrameTransform does it in the opposite direction.
-
-When the frames arrive the face detector is used. Face detection is done on the croppedBitmap, since is smaller it can speed up the detection process.
-
-If faces are detected, the original frame is drawn in the portraitBmp bitmap to proceed with the second step detection. For each detected face, its bounding box is retrieved and mapped from the cropped space to the original space. This way we can get a better resolution image to feed the mask detector. Face cropping is done by translating the portrait bitmap to the face's origin and scaling in such a way the face bounding box size matches the 224x224 pixels. Finally the mask detector is invoked.
-
-## Adding the mask detection step
-First the TensorFlow Lite model file was added to the assets folder of the project.
-
-And then the required parameters to fit our model requirements in the DetectorActivity configuration section were adjusted. We set the input size of the model to **TF_OD_API_INPUT_SIZE = 224**, and **TF_OD_IS_QUANTIZED = false**. We need to point to the mask detector file. Also we can create a label map text file with the classes names "mask" and "no-mask". Also we define a larger preview size to (800x600) px. to have better resolution for our detector.
-
-
-## More examples
-
-[![real time face mask detection in android](http://img.youtube.com/vi/9bxqWqg1Ixo/0.jpg)](https://www.youtube.com/watch?v=wFIIoYAte-k&list=PLFfYWLUQYSbqhrJj8ogRNR8WjQizxpHyq "more examples")
