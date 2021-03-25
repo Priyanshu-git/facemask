@@ -1,7 +1,7 @@
 
 # Real time face mask detection in Android 
 
-![demo 1](demo/demo1.mp4) ![demo 2](demo/demo2.mp4) 
+![demo 1](demo/demo1.gif) ![demo 2](demo/demo2.gif) 
 
 
 ### Overview
